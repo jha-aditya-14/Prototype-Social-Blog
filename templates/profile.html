@@ -1,0 +1,629 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static '../assets/img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" href="{% static '../assets/img/favicon.png' %}">
+    <title>
+        Profile
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="{% static '../assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+    <link href="{% static '../assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="{% static '../assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+    <link id="pagestyle" href="{% static '../assets/css/argon-dashboard.css' %}" rel="stylesheet" />
+    <style>
+        .form-popup {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .form-container {
+            max-width: 500px;
+            padding: 20px;
+            background-color: white;
+            margin: auto;
+        }
+
+        .form-container h4 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .form-container input[type=text],
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        .form-container button[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .form-container button[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .form-container button.cancel {
+            background-color: #f44336;
+        }
+
+        .form-container button.cancel:hover {
+            background-color: #da190b;
+        }
+
+        @media screen and (max-width: 700px) {
+            .form-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+    <div class="position-absolute w-100 min-height-300 top-0"
+        style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
+        <span class="mask bg-primary opacity-6"></span>
+    </div>
+    <aside
+        class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
+        id="sidenav-main">
+        <div class="sidenav-header">
+            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+                aria-hidden="true" id="iconSidenav"></i>
+            <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
+                target="_blank">
+                <img src="{% static '../assets/img/logo-ct-dark.png' %}" class="navbar-brand-img h-100" alt="main_logo">
+                <span class="ms-1 font-weight-bold">Blog App</span>
+            </a>
+        </div>
+        <hr class="horizontal dark mt-0">
+        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link " href="/{{userId}}/dashboard/">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/{{userId}}/personal-blogs/">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Personal Blogs</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/{{userId}}/profile/">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Profile & <br>Blogs Creation</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidenav-footer mx-3 ">
+            <div class="card card-plain shadow-none" id="sidenavCard">
+                <img class="w-50 mx-auto" src="{% static '../assets/img/illustrations/icon-documentation.svg' %}"
+                    alt="sidebar_illustration">
+                <div class="card-body text-center p-3 w-100 pt-0">
+                    <div class="docs-info">
+                        <h6 class="mb-0">Need help?</h6>
+                        <p class="text-xs font-weight-bold mb-0">Please check our docs</p>
+                    </div>
+                </div>
+            </div>
+            <a href="">Documentation</a>
+            <a class="btn btn-primary btn-sm mb-0 w-100" href="" type="button">Upgrade to pro</a>
+        </div>
+    </aside>
+    <div class="main-content position-relative max-height-vh-100 h-100">
+        <!-- Navbar -->
+        <nav
+            class="navbar navbar-main navbar-expand-lg bg-transparent shadow-none position-absolute px-4 w-100 z-index-2 mt-n11">
+            <div class="container-fluid py-1">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ps-2 me-sm-6 me-5">
+                        <li class="breadcrumb-item text-sm"><a class="text-white " href="javascript:;">Pages</a></li>
+                        <li class="breadcrumb-item text-sm text-white active" color="white" aria-current="page">Profile
+                        </li>
+                    </ol>
+                    <h6 class="text-white font-weight-bolder ms-2" color="white">Profile</h6>
+                </nav>
+                <div class="collapse navbar-collapse me-md-0 me-sm-4 mt-sm-0 mt-2" id="navbar">
+                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+
+                    </div>
+                    <ul class="navbar-nav justify-content-end">
+                        <li class="nav-item d-flex align-items-center">
+                            <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
+                                <i class="fa fa-user me-sm-1"></i>
+                                <span class="d-sm-inline d-none">Sign In</span>
+                            </a>
+                        </li>
+                        <li class="nav-item d-xl-none ps-3 pe-0 d-flex align-items-center">
+                            <a href="javascript:;" class="nav-link text-white p-0">
+                                <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                                    <div class="sidenav-toggler-inner">
+                                        <i class="sidenav-toggler-line bg-white"></i>
+                                        <i class="sidenav-toggler-line bg-white"></i>
+                                        <i class="sidenav-toggler-line bg-white"></i>
+                                    </div>
+                                </a>
+                            </a>
+                        </li>
+                        <li class="nav-item px-3 d-flex align-items-center">
+                            <a href="javascript:;" class="nav-link text-white p-0">
+                                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item pe-2 d-flex align-items-center">
+                            <a href="/{{userId}}/profile/">
+                                <img src="/media/{{userData.img}}" alt="profile_image"
+                                    onerror="this.onerror=null;this.src='/media/default-avatar.avif';"
+                                    class="w-100 border-radius-lg shadow-sm"
+                                    style="border-radius: 50%; height: 20px; width: 20px;">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="card shadow-lg mx-4 card-profile-bottom">
+            <div class="card-body p-3">
+                <div class="row gx-4">
+                    <div class="col-auto">
+                        <div class="avatar avatar-xl position-relative">
+                            <a id="create-profile-link"
+                                class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center"
+                                data-bs-toggle="modal" href="#myModal" role="tab" aria-selected="true">
+                                <span class="ms-2">
+                                    <img src="/media/{{userData.img}}" alt="profile_image"
+                                        onerror="this.onerror=null;this.src='/media/default-avatar.avif';"
+                                        class="w-100 border-radius-lg shadow-sm">
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Upload Profile Image</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form role="form text-left" class="form-container" enctype="multipart/form-data"
+                                            action="/{{userId}}/profile/upoad-profile-img/" method="POST">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                <label for="image">Upload Image (JPG, PNG, GIF):</label>
+                                                <input id="image" type="file" name="image" class="form-control"
+                                                    aria-label="Image">
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit"
+                                                    class="btn bg-gradient-dark w-100 my-2 mb-2">Submit</button>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="button" class="btn cancel" data-bs-dismiss="modal"
+                                                    style="color:white;">Close</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto my-auto">
+                        <div class="h-100">
+                            <h5 class="mb-1">
+                                {{userData.first_name}} {{userData.last_name}}
+                            </h5>
+                            <p class="mb-0 font-weight-bold text-sm">
+                                Blogger
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                        <div class="nav-wrapper position-relative end-0">
+                            <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                                <li class="nav-item">
+                                    <a id="create-blog-link"
+                                        class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center"
+                                        data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
+                                        <i class="ni ni-app"></i>
+                                        <span class="ms-2">Create Blog</span>
+                                    </a>
+                                    <div class="form-popup" id="myForm">
+                                        <form role="form text-left" class="form-container" enctype="multipart/form-data"
+                                            action="/{{userId}}/profile/new-blog/" method="POST">
+                                            {% csrf_token %}
+                                            <h4>Create a Blog</h4>
+                                            <div class="mb-3">
+                                                <label for="title"><b>Blog Title</b></label>
+                                                <input id="name" type="text" class="form-control"
+                                                    placeholder="Enter Title" name="name" aria-label="Name"
+                                                    aria-describedby="text-addon" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="content"><b>Blog Content</b></label>
+                                                <textarea id="desc" type="text" name="desc" class="form-control"
+                                                    placeholder="Enter Blog Content" aria-label="Name"
+                                                    aria-describedby="text-addon"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="image">Upload Image (JPG, PNG, GIF):</label>
+                                                <input id="image" type="file" name="image" class="form-control"
+                                                    aria-label="Image">
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit"
+                                                    class="btn bg-gradient-dark w-100 my-2 mb-2">Submit</button>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="button" class="btn cancel" id="close-form-btn"
+                                                    style="color:white;">Close</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/{{userId}}/settings/">
+                                        <i class="ni ni-settings-gear-65"></i>
+                                        <span class="ms-2">Settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <form action="/{{userId}}/profile/update-userInfo/" method="POST">
+                            {% csrf_token %}
+                            <div class="card-header pb-0">
+                                <div class="d-flex align-items-center">
+                                    <p class="mb-0">Edit Profile</p>
+                                    <button class="btn btn-primary btn-sm ms-auto">Save</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-uppercase text-sm">User Information</p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Username</label>
+                                            <input class="form-control" type="text" name="uname"
+                                                value="{{userInfo.userName}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Email
+                                                address</label>
+                                            <input class="form-control" type="email" value="{{userData.email}}"
+                                                name="email" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">First
+                                                name</label>
+                                            <input class="form-control" type="text" value="{{userData.first_name}}"
+                                                name="fname">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Last name</label>
+                                            <input class="form-control" type="text" value="{{userData.last_name}}"
+                                                name="lname">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="horizontal dark">
+                                <p class="text-uppercase text-sm">Contact Information</p>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Address</label>
+                                            <input class="form-control" type="text" value="{{userInfo.address}}"
+                                                name="address">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">City</label>
+                                            <input class="form-control" type="text" value="{{userInfo.city}}"
+                                                name="city">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Country</label>
+                                            <input class="form-control" type="text" value="{{userInfo.country}}"
+                                                name="country">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Postal
+                                                code</label>
+                                            <input class="form-control" type="text" value="{{userInfo.postalCode}}"
+                                                name="code">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="horizontal dark">
+                                <p class="text-uppercase text-sm">About me</p>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">About me</label>
+                                            <input class="form-control" type="text" value="{{userInfo.aboutMe}}"
+                                                name="about">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-profile">
+
+                        <img src="{% static '../assets/img/bg-profile.jpg' %}" alt="Image placeholder"
+                            class="card-img-top">
+                        <div class="row justify-content-center">
+                            <div class="d-grid text-center mx-4">
+                                <span class="text-sm opacity-8"
+                                    style="text-decoration:solid ; margin-left:75%; font-weight: bolder ;">Blog Counts :
+                                    {{blogCount}}</span>
+                            </div>
+                            <div class="col-4 col-lg-4 order-lg-2">
+                                <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+                                    <a href="javascript:;">
+                                        <img src="/media/{{userData.img}}" alt="profile_image"
+                                            onerror="this.onerror=null;this.src='/media/default-avatar.avif';"
+                                            class="w-100 border-radius-lg shadow-sm" style="border-radius: 50%;">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
+                            <div class="d-flex justify-content-between">
+                            </div>
+                        </div> -->
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="d-flex justify-content-center">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <h5>
+                                    {{userData.first_name}} {{userData.last_name}}<span
+                                        class="font-weight-light"></span>
+                                </h5>
+                                <div class="h6 font-weight-300">
+                                    <i class="ni location_pin mr-2"></i>{{userInfo.city}}, {{userInfo.country}}
+                                </div>
+                                <div class="h6 mt-4">
+                                    <i class="ni business_briefcase-24 mr-2"></i>Blogger - Creative
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer fixed-bottom" style="background-color: black;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8 mx-auto text-center mt-1">
+                            <p class="mb-0 text-secondary" style="color: white;">
+                                Copyright ©
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script> Soft by Aditya Jha
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="fixed-plugin">
+        <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+            <i class="fa fa-cog py-2"> </i>
+        </a>
+        <div class="card shadow-lg">
+            <div class="card-header pb-0 pt-3 ">
+                <div class="float-start">
+                    <h5 class="mt-3 mb-0"> Configurator</h5>
+                    <p>See our dashboard options.</p>
+                </div>
+                <div class="float-end mt-4">
+                    <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+                <!-- End Toggle Button -->
+            </div>
+            <hr class="horizontal dark my-1">
+            <div class="card-body pt-sm-3 pt-0 overflow-auto">
+                <!-- Sidebar Backgrounds -->
+                <div>
+                    <h6 class="mb-0">Sidebar Colors</h6>
+                </div>
+                <a href="javascript:void(0)" class="switch-trigger background-color">
+                    <div class="badge-colors my-2 text-start">
+                        <span class="badge filter bg-gradient-primary active" data-color="primary"
+                            onclick="sidebarColor(this)"></span>
+                        <span class="badge filter bg-gradient-dark" data-color="dark"
+                            onclick="sidebarColor(this)"></span>
+                        <span class="badge filter bg-gradient-info" data-color="info"
+                            onclick="sidebarColor(this)"></span>
+                        <span class="badge filter bg-gradient-success" data-color="success"
+                            onclick="sidebarColor(this)"></span>
+                        <span class="badge filter bg-gradient-warning" data-color="warning"
+                            onclick="sidebarColor(this)"></span>
+                        <span class="badge filter bg-gradient-danger" data-color="danger"
+                            onclick="sidebarColor(this)"></span>
+                    </div>
+                </a>
+                <!-- Sidenav Type -->
+                <div class="mt-3">
+                    <h6 class="mb-0">Sidenav Type</h6>
+                    <p class="text-sm">Choose between 2 different sidenav types.</p>
+                </div>
+                <div class="d-flex">
+                    <button class="btn bg-gradient-primary w-100 px-3 mb-2 active me-2" data-class="bg-white"
+                        onclick="sidebarType(this)">White</button>
+                    <button class="btn bg-gradient-primary w-100 px-3 mb-2" data-class="bg-default"
+                        onclick="sidebarType(this)">Dark</button>
+                </div>
+                <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
+                <!-- Navbar Fixed -->
+                <div class="d-flex my-3">
+                    <h6 class="mb-0">Navbar Fixed</h6>
+                    <div class="form-check form-switch ps-0 ms-auto my-auto">
+                        <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed"
+                            onclick="navbarFixed(this)">
+                    </div>
+                </div>
+                <hr class="horizontal dark my-sm-4">
+                <div class="mt-2 mb-5 d-flex">
+                    <h6 class="mb-0">Light / Dark</h6>
+                    <div class="form-check form-switch ps-0 ms-auto my-auto">
+                        <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version"
+                            onclick="darkMode(this)">
+                    </div>
+                </div>
+
+                <h6 class="mt-3">Thank you</h6>
+                <a href="" class="btn btn-dark mb-0 me-2" target="_blank">
+                    <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
+                </a>
+                <a href="" class=" btn btn-dark mb-0 me-2" target="_blank">
+                    <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="{% static '../assets/js/core/popper.min.js' %}"></script>
+    <script src="{% static '../assets/js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static '../assets/js/plugins/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static '../assets/js/plugins/smooth-scrollbar.min.js' %}"></script>
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="{%static '../assets/js/argon-dashboard.min.js' %}"></script>
+
+    <script>
+        var inactivityTime = 10; // time in minutes
+        var logoutUrl = '/';
+
+        function resetTimer() {
+            clearTimeout(timer);
+            timer = setTimeout(logout, inactivityTime * 60 * 1000);
+        }
+
+        function logout() {
+            window.location.href = logoutUrl;
+        }
+
+        var timer = setTimeout(logout, inactivityTime * 60 * 1000);
+        window.onload = resetTimer;
+        document.onmousemove = resetTimer;
+        document.onkeypress = resetTimer;
+
+        var currentPage = window.location.pathname;
+        if (currentPage === '/') {
+            clearTimeout(timer);
+        }
+    </script>
+    <script>
+
+        const createBlogLink = document.getElementById('create-blog-link');
+        const closeFormBtn = document.getElementById('close-form-btn');
+        const popupForm = document.getElementById('myForm');
+
+        createBlogLink.addEventListener('click', () => {
+            // display the popup form
+            popupForm.style.display = 'block';
+        });
+
+        closeFormBtn.addEventListener('click', () => {
+            // hide the popup form
+            popupForm.style.display = 'none';
+        });
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+  <title>
+    Blog App - Verify
+  </title>
+  
+  <link id="pagestyle" href="{% static '../assets/css/argon-dashboard.css' %}" rel="stylesheet" />
+ 
+  
+</head>
+
+<body class="">
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        <!-- Navbar -->
+        <nav
+          class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
+          <div class="container-fluid">
+            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 ">
+              Blog App
+            </a>
+        </nav>
+        <!-- End Navbar -->
+      </div>
+    </div>
+  </div>
+  <main class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+              <div class="card card-plain">
+                <div class="card-header pb-0 text-start">
+                  <h4 class="font-weight-bolder">Verify OTP</h4>
+                  <p class="mb-0">Enter OTP</p>
+                </div>
+                <div class="card-body">
+                  <form role="form" action="/{{userId}}/verify-user-otp/" method="POST" >
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label>Verify OTP</label>
+                      <input type="test" name="otp" class="form-control form-control-lg" placeholder="OTP"
+                        aria-label="OTP" required>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Verify</button>
+                    </div>
+                  </form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+ 
+</body>
+
+</html>
