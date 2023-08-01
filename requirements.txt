@@ -15,7 +15,6 @@ click-repl==0.3.0
 colorama==0.4.4
 contourpy==1.1.0
 cryptography==3.4.8
-cupshelpers==1.0
 cycler==0.11.0
 dbus-python==1.2.18
 defer==1.0.6
